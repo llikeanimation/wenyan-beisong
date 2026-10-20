@@ -1,0 +1,89 @@
+/* ============================================================
+   文言文背诵 · 共用基础
+   配色、字体、纸面、按钮 —— 首页与阅读页都引这一份
+   ============================================================ */
+
+:root {
+  --bg: #f6f1e6;
+  --paper: #fcf9f1;
+  --ink: #38332a;
+  --soft: #6e6555;
+  --line: #e2d9c5;
+  --accent: #a8392d;
+  --accent-soft: #f4e6e1;
+  --word: #b35200;
+  --word-bg: #f1e9d4;
+  /* 相接的加点词依次用 1/2/3 色（默认色是第 1 色） */
+  --word2: #0068b0;
+  --word3: #c2185b;
+  --word4: #00796b;
+  --blank: #e9e1ce;
+  --blank-ink: #b7aa8e;
+  --shadow: rgba(80, 66, 40, 0.12);
+
+  --serif: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC",
+    "SimSun", serif;
+  --kai: "Kaiti SC", "STKaiti", "KaiTi", "Kaiti", "Noto Serif CJK SC", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+
+  --sent: 19px;
+  --ui: 14px;
+  --lh: 2.1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+.noscript {
+  max-width: 560px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: var(--soft);
+  font-size: 15px;
+  line-height: 1.9;
+}

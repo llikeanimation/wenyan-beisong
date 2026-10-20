@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F6F1E6">
+<meta name="color-scheme" content="light">
+<meta name="description" content="山东专升本文言文背诵：25 篇原文逐段、译文折叠、加点字词随手查。">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="文言文">
+<title>文言文背诵 · 山东专升本</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body>
+
+<div class="page">
+
+  <header class="head">
+    <p class="eyebrow">山东专升本 · 大学语文</p>
+    <h1>文言文背诵</h1>
+    <p class="lead">原文逐段 · 译文折叠 · 加点字词随手查</p>
+    <p class="progress"><b id="ready">0</b> / <span id="total">25</span> 篇已上线</p>
+  </header>
+
+  <div class="search">
+    <input id="q" type="search" placeholder="搜索篇名或作者" autocomplete="off"
+           autocapitalize="off" spellcheck="false" inputmode="search">
+  </div>
+
+  <ul id="list" class="list"></ul>
+  <p id="empty" class="empty" hidden>没有匹配的篇目</p>
+  <div id="pending" class="pending" hidden></div>
+
+  <footer class="home-foot">
+    <p>点开任意一篇：点句子看译文，点加点字看释义。</p>
+  </footer>
+
+</div>
+
+<noscript>
+  <p class="noscript">这个页面需要开启 JavaScript 才能显示目录。</p>
+</noscript>
+
+<script src="data/catalog.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>
