@@ -9,7 +9,8 @@ window.CATALOG = [
   { no: 6, slug: 'zhengbo', title: '郑伯克段于鄢', author: '〔先秦〕《左传·隐公元年》', paras: 7, words: 84, marks: 84, chars: 726, ready: true },
   { no: 7, slug: 'lunguisushu', title: '论贵粟疏', author: '〔汉〕晁错 · 选自《汉书·食货志》', paras: 7, words: 77, marks: 79, chars: 1220, ready: true },
   { no: 8, slug: 'liuhoulun', title: '留侯论', author: '〔北宋〕苏轼 · 选自《东坡七集·应诏集》', paras: 7, words: 61, marks: 63, chars: 734, ready: true },
-  { no: 9, slug: 'goujian', title: '勾践灭吴', author: '〔先秦〕《国语·越语上》', paras: 9, words: 94, marks: 96, chars: 1568, ready: true }
+  { no: 9, slug: 'goujian', title: '勾践灭吴', author: '〔先秦〕《国语·越语上》', paras: 9, words: 94, marks: 96, chars: 1568, ready: true },
+  { no: 10, slug: 'chuanshilou', title: '传是楼记', author: '〔清〕汪琬 · 选自《尧峰文钞》', paras: 5, words: 73, marks: 74, chars: 814, ready: true }
 ];
 /* 目标是 25 篇：其余篇目加到上面数组里、把 ready 设为 false 即可占位，
    内容补齐后改成 true 并删掉 ready 字段也行（缺省按 true 处理）。 */
