@@ -1,50 +1,419 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F6F1E6">
-<meta name="color-scheme" content="light">
-<meta name="description" content="山东专升本文言文背诵：25 篇原文逐段、译文折叠、加点字词随手查。">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="文言文">
-<title>文言文背诵 · 山东专升本</title>
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/home.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4eee3">
+<title>文学常识 · 分组刷题</title>
+<meta name="description" content="山东专升本文学常识分组刷题：按板块和题型每 10 题一组，自动保存进度和正确率。">
+<style>
+  :root {
+    --bg: #f4eee3;
+    --paper: #fffdf8;
+    --ink: #2c2924;
+    --ink-soft: #5d574d;
+    --muted: #958c7c;
+    --line: #e7ddce;
+    --red: #9e3b2d;
+    --red-soft: rgba(158, 59, 45, .08);
+    --green: #456b56;
+    --green-soft: rgba(69, 107, 86, .09);
+    --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+    --sans: "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+  body { padding: 30px 28px 64px; }
+  button, input { font: inherit; }
+  .shell { max-width: 1080px; margin: 0 auto; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 34px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .seal { width: 38px; height: 38px; border-radius: 10px; background: var(--red); color: #fff8ed; display: grid; place-items: center; font-family: var(--serif); font-size: 21px; box-shadow: 0 5px 14px rgba(94, 43, 28, .16); }
+  .brand strong { display: block; font-family: var(--serif); font-size: 19px; letter-spacing: .06em; }
+  .brand small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; letter-spacing: .08em; }
+  .pill { border: 1px solid rgba(158, 59, 45, .22); color: var(--red); background: rgba(255, 253, 248, .55); border-radius: 999px; padding: 6px 10px; font-size: 10px; white-space: nowrap; }
+  .eyebrow { margin: 0 0 7px; color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+  h1, h2, h3, p { margin-top: 0; }
+  h1 { margin-bottom: 12px; font-family: var(--serif); font-size: 46px; line-height: 1.22; letter-spacing: .03em; }
+  .lead { max-width: 760px; margin-bottom: 24px; color: var(--ink-soft); font-size: 15px; line-height: 1.85; }
+  .note { display: flex; gap: 9px; align-items: flex-start; max-width: 820px; margin: 0 0 26px; padding: 12px 14px; border: 1px dashed rgba(158, 59, 45, .28); border-radius: 11px; color: #7f5b32; background: rgba(255, 253, 248, .65); font-size: 12px; line-height: 1.7; }
+  .note b { color: var(--red); }
+  .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+  .section-title strong { font-family: var(--serif); font-size: 20px; }
+  .section-title span { color: var(--muted); font-size: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .category { appearance: none; width: 100%; min-height: 128px; padding: 18px 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); color: var(--ink); text-align: left; box-shadow: 0 4px 16px rgba(79, 59, 35, .04); cursor: pointer; }
+  .category:active { transform: translateY(1px); }
+  .category strong { display: block; font-family: var(--serif); font-size: 18px; line-height: 1.45; }
+  .category span { display: block; margin-top: 10px; color: var(--muted); font-size: 12px; }
+  .category em { display: inline-block; margin-top: 14px; color: var(--red); font-size: 11px; font-style: normal; letter-spacing: .04em; }
+  .type-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .type-card { appearance: none; width: 100%; padding: 30px 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); color: var(--ink); text-align: left; box-shadow: 0 6px 22px rgba(79, 59, 35, .045); cursor: pointer; }
+  .type-card strong { display: block; font-family: var(--serif); font-size: 28px; }
+  .type-card span { display: block; margin-top: 10px; color: var(--muted); font-size: 13px; }
+  .type-card em { display: block; margin-top: 20px; color: var(--red); font-size: 13px; font-style: normal; }
+  .back { appearance: none; border: 0; background: transparent; color: var(--muted); padding: 3px 0; font-size: 13px; cursor: pointer; }
+  .group { appearance: none; padding: 17px 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); color: var(--ink); text-align: left; cursor: pointer; box-shadow: 0 3px 12px rgba(79, 59, 35, .035); }
+  .group strong { display: block; font-family: var(--serif); font-size: 17px; }
+  .group span { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+  .group em { display: block; margin-top: 12px; color: var(--muted); font-size: 12px; font-style: normal; }
+  .group.done { border-color: rgba(69, 107, 86, .28); background: linear-gradient(145deg, #fffefa, rgba(69, 107, 86, .045)); }
+  .group.done em { color: var(--green); font-weight: 700; }
+  .group.active { border-color: rgba(158, 59, 45, .25); background: linear-gradient(145deg, #fffefa, rgba(158, 59, 45, .035)); }
+  .group.active em { color: var(--red); }
+  .storage-note { margin-top: 22px; color: var(--muted); font-size: 11px; line-height: 1.7; text-align: center; }
+  .quiz { max-width: 860px; margin: 0 auto; padding-bottom: 112px; }
+  .quiz-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+  .quiz-head .back { color: var(--ink-soft); }
+  .counter { color: var(--muted); font-size: 13px; }
+  .counter b { color: var(--ink); font-weight: 600; }
+  .card { padding: 34px 30px 30px; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: 0 10px 30px rgba(79, 59, 35, .055); }
+  .meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
+  .tag { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; color: var(--ink-soft); background: rgba(244, 238, 227, .5); font-size: 11px; }
+  .tag.red { border-color: rgba(158, 59, 45, .2); color: var(--red); background: var(--red-soft); }
+  .serial { color: var(--muted); font-size: 12px; letter-spacing: .08em; }
+  .stem { margin: 0 0 10px; font-family: var(--serif); font-size: 27px; line-height: 1.6; letter-spacing: .01em; overflow-wrap: anywhere; }
+  .hint { margin: 0 0 22px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .options { display: grid; gap: 10px; }
+  .option { appearance: none; display: flex; align-items: flex-start; gap: 12px; width: 100%; padding: 15px 16px; border: 1px solid var(--line); border-radius: 13px; color: var(--ink-soft); background: #fffefa; text-align: left; font-size: 15px; line-height: 1.65; cursor: pointer; }
+  .option .letter { width: 28px; height: 28px; flex: none; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--muted); font-family: var(--serif); font-size: 12px; }
+  .option .mark { margin-left: auto; color: var(--green); font-weight: 700; }
+  .option.selected { border-color: rgba(158, 59, 45, .45); background: rgba(158, 59, 45, .035); color: var(--ink); }
+  .option.selected .letter { border-color: var(--red); color: var(--red); }
+  .option.correct { border-color: rgba(69, 107, 86, .4); background: var(--green-soft); color: var(--green); }
+  .option.correct .letter { border-color: var(--green); color: var(--green); }
+  .option.wrong { border-color: rgba(158, 59, 45, .3); background: var(--red-soft); color: var(--red); }
+  .option.wrong .letter { border-color: var(--red); color: var(--red); }
+  .option.dim { opacity: .55; }
+  .fill-input { width: 100%; padding: 15px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fffefa; color: var(--ink); outline: none; font-size: 16px; }
+  .fill-input:focus { border-color: rgba(158, 59, 45, .45); box-shadow: 0 0 0 3px rgba(158, 59, 45, .06); }
+  .fill-input.correct { border-color: rgba(69, 107, 86, .4); background: var(--green-soft); color: var(--green); }
+  .fill-input.wrong { border-color: rgba(158, 59, 45, .3); background: var(--red-soft); color: var(--red); }
+  .feedback { margin-top: 18px; padding: 16px 16px; border-radius: 13px; background: rgba(244, 238, 227, .58); font-size: 13px; line-height: 1.8; color: var(--ink-soft); }
+  .feedback strong { display: block; margin-bottom: 6px; color: var(--ink); font-family: var(--serif); font-size: 17px; }
+  .feedback .answer { color: var(--green); font-weight: 600; }
+  .feedback .explain { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .action { position: fixed; z-index: 2; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); width: min(calc(100% - 56px), 820px); transform: translateX(-50%); padding: 16px 20px; border: 0; border-radius: 14px; background: var(--ink); color: #fffdf8; box-shadow: 0 12px 30px rgba(36, 30, 22, .22); font-size: 15px; letter-spacing: .04em; cursor: pointer; }
+  .action:disabled { background: #c9bfae; box-shadow: none; cursor: not-allowed; }
+  .result { max-width: 900px; margin: 0 auto; padding: 34px 30px 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); }
+  .result-top { text-align: center; padding-bottom: 24px; border-bottom: 1px dashed var(--line); }
+  .result .big { margin: 16px 0 4px; color: var(--red); font-family: var(--serif); font-size: 64px; line-height: 1; }
+  .result h2 { margin-bottom: 7px; font-family: var(--serif); font-size: 26px; }
+  .result p { color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .result-actions { display: grid; gap: 8px; margin-top: 18px; }
+  .result-actions .action { position: static; width: 100%; transform: none; }
+  .result-actions .secondary { background: #8d8171; }
+  .review { margin-top: 20px; }
+  .review h3 { margin-bottom: 10px; font-family: var(--serif); font-size: 20px; }
+  .review-item { margin-bottom: 9px; border: 1px solid var(--line); border-radius: 12px; background: #fffefa; overflow: hidden; }
+  .review-item summary { display: flex; gap: 9px; align-items: flex-start; padding: 13px 14px; cursor: pointer; list-style: none; }
+  .review-item summary::-webkit-details-marker { display: none; }
+  .review-mark { width: 20px; height: 20px; flex: none; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 11px; background: var(--green); }
+  .review-item.wrong .review-mark { background: var(--red); }
+  .review-title { flex: 1; color: var(--ink); font-size: 13px; line-height: 1.65; }
+  .review-title small { display: block; color: var(--muted); font-size: 11px; }
+  .review-body { padding: 0 14px 14px; border-top: 1px dashed var(--line); }
+  .review-stem { padding-top: 12px; color: var(--ink-soft); font-family: var(--serif); font-size: 14px; line-height: 1.75; }
+  .review-option { display: flex; gap: 8px; padding: 8px 10px; margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink-soft); font-size: 12px; line-height: 1.6; }
+  .review-option.correct { border-color: rgba(69, 107, 86, .3); color: var(--green); background: var(--green-soft); }
+  .review-option.wrong { border-color: rgba(158, 59, 45, .25); color: var(--red); background: var(--red-soft); }
+  .review-option.dim { opacity: .65; }
+  .review-option .rl { width: 1.4em; flex: none; font-family: var(--serif); }
+  .review-option .rm { margin-left: auto; }
+  .review-answers { margin: 10px 0 0; color: var(--ink-soft); font-size: 12px; line-height: 1.7; }
+  .review-answers b { color: var(--green); }
+  .review-explain { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+  .storage-note { text-align: center; }
+  @media (min-width: 1180px) {
+    .groups { grid-template-columns: repeat(5, 1fr); }
+  }
+  @media (max-width: 760px) {
+    body { padding: 18px 14px 40px; }
+    h1 { font-size: 32px; }
+    .grid, .groups, .type-list { grid-template-columns: 1fr 1fr; }
+    .type-list { grid-template-columns: 1fr; }
+    .quiz { padding-bottom: 94px; }
+    .card { padding: 20px 16px 18px; }
+    .stem { font-size: 22px; }
+    .action { width: calc(100% - 28px); bottom: 14px; padding: 14px 16px; }
+    .result { padding: 26px 16px 18px; }
+    .result .big { font-size: 54px; }
+  }
+</style>
 </head>
 <body>
+<div class="shell" id="app"></div>
+<script src="questions.js"></script>
+<script>
+(function () {
+  "use strict";
+  var bank = Array.isArray(window.QUESTION_BANK) ? window.QUESTION_BANK : [];
+  var PER_GROUP = 10;
+  var STORAGE_KEY = "wenxue-sequence-groups-v2";
+  var storageOk = true;
+  var store = loadStore();
+  var state = { screen: "home", category: "", type: "", group: 0, items: [], index: 0, selected: null, fill: "", record: null, score: 0, done: false };
+  var app = document.getElementById("app");
 
-<div class="page">
+  function loadStore() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { groups: {} };
+      var data = JSON.parse(raw);
+      return data && typeof data === "object" && data.groups ? data : { groups: {} };
+    } catch (error) {
+      storageOk = false;
+      return { groups: {} };
+    }
+  }
+  function saveStore() {
+    try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+    catch (error) { storageOk = false; }
+  }
+  function key(category, type, group) { return category + "||" + type + "||" + group; }
+  function progressFor(category, type, group) {
+    var k = key(category, type, group);
+    if (!store.groups[k]) store.groups[k] = { answers: {}, index: 0, score: 0, completed: false, draftSelected: null, draftFill: "" };
+    return store.groups[k];
+  }
+  function esc(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function normalize(value) {
+    return String(value || "").replace(/[\s，。；：、？！“”‘’（）()《》〈〉·,.;:!?\-—…]/g, "").toLowerCase();
+  }
+  function categories() {
+    var map = new Map();
+    bank.forEach(function (q) { map.set(q.category, (map.get(q.category) || 0) + 1); });
+    return Array.from(map, function (entry) { return { name: entry[0], count: entry[1] }; });
+  }
+  function allOf(category, type) {
+    return bank.filter(function (q) { return q.category === category && q.type === type; });
+  }
+  function groupsOf(category, type) {
+    var all = allOf(category, type);
+    var result = [];
+    for (var i = 0; i < all.length; i += PER_GROUP) result.push(all.slice(i, i + PER_GROUP));
+    return result;
+  }
+  function categoryCount(category) { return bank.filter(function (q) { return q.category === category; }).length; }
+  function statusOf(progress, total) {
+    if (progress.completed) return "正确率 " + Math.round((progress.score / total) * 100) + "%";
+    if (progress.index > 0) return "继续 · 已完成 " + progress.index + "/" + total;
+    return "未开始";
+  }
+  function current() { return state.items[state.index] || null; }
+  function pad(n) { return String(n).padStart(2, "0"); }
 
-  <header class="head">
-    <p class="eyebrow">山东专升本 · 大学语文</p>
-    <h1>文言文背诵</h1>
-    <p class="lead">原文逐段 · 译文折叠 · 加点字词随手查</p>
-    <p class="progress"><b id="ready">0</b> / <span id="total">25</span> 篇已上线</p>
-  </header>
+  function renderHome() {
+    var list = categories();
+    app.innerHTML =
+      '<header class="top"><div class="brand"><span class="seal">文</span><span><strong>文学常识</strong><small>山东专升本 · 分组刷题</small></span></div><span class="pill">分组刷题</span></header>' +
+      '<p class="eyebrow">SEQUENTIAL PRACTICE</p>' +
+      '<h1>先选板块，<br>再按组刷题。</h1>' +
+      '<p class="lead">每个板块的题目按题库顺序编号，每 10 道为一组；做完一组，查看本组正确率。</p>' +
+      '<div class="note"><span>进</span><span>进度会自动保存在这个浏览器里。退出再打开，已做的组和没做完的题都会保留。</span></div>' +
+      '<div class="section-title"><strong>选择板块</strong><span>共 ' + bank.length + ' 题</span></div>' +
+      '<div class="grid">' + list.map(function (item) {
+        return '<button class="category" type="button" data-category="' + esc(item.name) + '"><strong>' + esc(item.name) + '</strong><span>' + item.count + ' 道题</span><em>进入 →</em></button>';
+      }).join("") + '</div>';
+  }
 
-  <div class="search">
-    <input id="q" type="search" placeholder="搜索篇名或作者" autocomplete="off"
-           autocapitalize="off" spellcheck="false" inputmode="search">
-  </div>
+  function renderTypes() {
+    var choiceCount = allOf(state.category, "choice").length;
+    var fillCount = allOf(state.category, "fill").length;
+    app.innerHTML =
+      '<header class="top"><div class="brand"><span class="seal">文</span><span><strong>' + esc(state.category) + '</strong><small>分组刷题 · 每 10 题一组</small></span></div><span class="pill">' + categoryCount(state.category) + ' 道</span></header>' +
+      '<button class="back" type="button" data-action="home">← 返回板块</button>' +
+      '<p class="eyebrow" style="margin-top:22px">CHOOSE TYPE</p>' +
+      '<h1>选择题，<br>还是填空题？</h1>' +
+      '<p class="lead">两种题型分开练。每 10 题一组，从第 1 组开始往后排。</p>' +
+      '<div class="type-list">' +
+      '<button class="type-card" type="button" data-type="choice"' + (choiceCount ? "" : " disabled") + '><strong>选择题</strong><span>共 ' + choiceCount + ' 道 · ' + Math.ceil(choiceCount / PER_GROUP) + ' 组</span><em>' + (choiceCount ? "查看分组 →" : "这个板块暂时没有选择题") + '</em></button>' +
+      '<button class="type-card" type="button" data-type="fill"' + (fillCount ? "" : " disabled") + '><strong>填空题</strong><span>共 ' + fillCount + ' 道 · ' + Math.ceil(fillCount / PER_GROUP) + ' 组</span><em>' + (fillCount ? "查看分组 →" : "这个板块暂时没有填空题") + '</em></button>' +
+      '</div>';
+  }
 
-  <ul id="list" class="list"></ul>
-  <p id="empty" class="empty" hidden>没有匹配的篇目</p>
-  <div id="pending" class="pending" hidden></div>
+  function renderGroups() {
+    var groups = groupsOf(state.category, state.type);
+    var all = allOf(state.category, state.type);
+    app.innerHTML =
+      '<header class="top"><div class="brand"><span class="seal">文</span><span><strong>' + esc(state.category) + '</strong><small>' + (state.type === "choice" ? "选择题" : "填空题") + ' · 每 10 题一组</small></span></div><span class="pill">' + all.length + ' 道</span></header>' +
+      '<button class="back" type="button" data-action="types">← 返回题型</button>' +
+      '<p class="eyebrow" style="margin-top:22px">GROUPS</p>' +
+      '<h1>选一组，<br>开始按顺序做。</h1>' +
+      '<p class="lead">每组 10 道，组内按题库顺序编号。做完的组会显示正确率，没做完的组可以从上次的位置继续。</p>' +
+      '<div class="groups">' + groups.map(function (items, index) {
+        var progress = progressFor(state.category, state.type, index);
+        var cls = "group" + (progress.completed ? " done" : progress.index > 0 ? " active" : "");
+        var start = index * PER_GROUP + 1;
+        var end = start + items.length - 1;
+        return '<button class="' + cls + '" type="button" data-group="' + index + '"><strong>第 ' + (index + 1) + ' 组</strong><span>题号 ' + start + '–' + end + ' · ' + items.length + ' 道</span><em>' + statusOf(progress, items.length) + '</em></button>';
+      }).join("") + '</div>' +
+      '<p class="storage-note">' + (storageOk ? "进度已自动保存到本机浏览器" : "当前浏览器禁用本地存储，关闭页面后进度可能丢失") + '</p>';
+  }
 
-  <footer class="home-foot">
-    <p>点开任意一篇：点句子看译文，点加点字看释义。</p>
-  </footer>
+  function startGroup(index) {
+    var groups = groupsOf(state.category, state.type);
+    state.group = index;
+    state.items = groups[index] || [];
+    state.done = false;
+    var progress = progressFor(state.category, state.type, index);
+    if (progress.completed) {
+      state.index = state.items.length;
+      state.score = progress.score;
+      renderResult();
+      return;
+    }
+    state.index = Math.min(progress.index, state.items.length - 1);
+    state.score = progress.score;
+    state.record = progress.answers[state.index] || null;
+    state.selected = progress.draftSelected;
+    state.fill = progress.draftFill || "";
+    state.screen = "quiz";
+    renderQuiz();
+  }
 
-</div>
+  function saveDraft() {
+    var progress = progressFor(state.category, state.type, state.group);
+    progress.draftSelected = state.selected;
+    progress.draftFill = state.fill;
+    saveStore();
+  }
 
-<noscript>
-  <p class="noscript">这个页面需要开启 JavaScript 才能显示目录。</p>
-</noscript>
+  function renderQuiz() {
+    var q = current();
+    if (!q) { renderGroups(); return; }
+    var isChoice = q.type === "choice";
+    var answered = Boolean(state.record);
+    var correctIndex = isChoice ? "ABCDEF".indexOf(q.answer) : -1;
+    var options = isChoice ? q.options.map(function (option, i) {
+      var classes = ["option"];
+      if (answered) {
+        if (i === correctIndex) classes.push("correct");
+        else if (i === state.selected) classes.push("wrong");
+        else classes.push("dim");
+      } else if (i === state.selected) classes.push("selected");
+      return '<button class="' + classes.join(" ") + '" type="button" data-option="' + i + '"' + (answered ? " disabled" : "") + '><span class="letter">' + "ABCDEF"[i] + '</span><span>' + esc(option) + '</span><span class="mark">' + (answered && i === correctIndex ? "✓" : "") + '</span></button>';
+    }).join("") : "";
+    var answerText = isChoice ? "ABCDEF"[correctIndex] + ". " + q.options[correctIndex] : q.blanks[0][0];
+    app.innerHTML =
+      '<div class="quiz">' +
+      '<header class="quiz-head"><button class="back" type="button" data-action="groups">← 第 ' + (state.group + 1) + ' 组</button><span class="counter">第 <b>' + (state.index + 1) + '</b> / ' + state.items.length + '</span></header>' +
+      '<div class="card">' +
+      '<div class="meta"><span class="tag">' + esc(q.category) + '</span><span class="serial">顺序 ' + pad(state.index + 1) + '</span></div>' +
+      '<span class="tag ' + (isChoice ? "" : "red") + '">' + (isChoice ? "选择题" : "填空题") + '</span>' +
+      '<h2 class="stem">' + esc(q.question) + '</h2>' +
+      '<p class="hint">' + (isChoice ? "选出唯一正确的一项。" : "在横线处填写答案，只保留一个空。") + '</p>' +
+      (isChoice ? '<div class="options">' + options + '</div>' : '<div class="fill-wrap"><input class="fill-input' + (answered ? (state.record.correct ? " correct" : " wrong") : "") + '" id="fill-input" value="' + esc(state.fill) + '"' + (answered ? " disabled" : "") + ' placeholder="输入答案"></div>') +
+      (answered ? '<div class="feedback"><strong>' + (state.record.correct ? "答对了" : "再记一遍") + '</strong><div>正确答案：<span class="answer">' + esc(answerText) + '</span></div>' + (q.explanation ? '<div class="explain">' + esc(q.explanation) + '</div>' : "") + '</div>' : "") +
+      '</div>' +
+      '<button class="action" id="action" type="button"' + (!answered && isChoice && state.selected == null ? " disabled" : "") + '>' + (answered ? (state.index === state.items.length - 1 ? "查看本组结果" : "下一题 →") : "确认答案") + '</button>' +
+      '</div>';
+    if (!isChoice && !answered) {
+      var input = document.getElementById("fill-input");
+      if (input) input.addEventListener("input", function () { state.fill = input.value; saveDraft(); });
+    }
+  }
 
-<script src="data/catalog.js"></script>
-<script src="assets/js/home.js"></script>
+  function confirm() {
+    var q = current();
+    if (!q || state.record) return;
+    var isChoice = q.type === "choice";
+    if (isChoice && state.selected == null) return;
+    var correct = isChoice
+      ? state.selected === "ABCDEF".indexOf(q.answer)
+      : q.blanks[0].some(function (accepted) { return normalize(accepted) === normalize(state.fill); });
+    var progress = progressFor(state.category, state.type, state.group);
+    state.record = { selected: state.selected, fill: state.fill, correct: correct };
+    progress.answers[state.index] = state.record;
+    progress.index = state.index + 1;
+    progress.score += correct ? 1 : 0;
+    progress.draftSelected = null;
+    progress.draftFill = "";
+    progress.completed = progress.index >= state.items.length;
+    state.score = progress.score;
+    saveStore();
+    renderQuiz();
+  }
+
+  function next() {
+    var progress = progressFor(state.category, state.type, state.group);
+    if (progress.completed) { renderResult(); return; }
+    state.index = progress.index;
+    state.selected = progress.draftSelected;
+    state.fill = progress.draftFill || "";
+    state.record = progress.answers[state.index] || null;
+    renderQuiz();
+  }
+
+  function renderResult() {
+    var progress = progressFor(state.category, state.type, state.group);
+    var total = state.items.length;
+    var score = progress.score;
+    var percent = total ? Math.round((score / total) * 100) : 0;
+    var review = state.items.map(function (q, index) {
+      var record = progress.answers[index];
+      var correct = Boolean(record && record.correct);
+      var isChoice = q.type === "choice";
+      var correctIndex = isChoice ? "ABCDEF".indexOf(q.answer) : -1;
+      var opts = isChoice ? q.options.map(function (option, i) {
+        var cls = "review-option";
+        if (i === correctIndex) cls += " correct";
+        else if (record && record.selected === i) cls += " wrong";
+        else cls += " dim";
+        return '<div class="' + cls + '"><span class="rl">' + "ABCDEF"[i] + '</span><span>' + esc(option) + '</span><span class="rm">' + (i === correctIndex ? "✓" : record && record.selected === i ? "✕" : "") + '</span></div>';
+      }).join("") : "";
+      var user = !record ? "未作答" : isChoice ? "ABCDEF"[record.selected] + ". " + q.options[record.selected] : record.fill || "未填写";
+      var right = isChoice ? "ABCDEF"[correctIndex] + ". " + q.options[correctIndex] : q.blanks[0][0];
+      return '<details class="review-item' + (correct ? "" : " wrong") + '"' + (correct ? "" : " open") + '><summary><span class="review-mark">' + (correct ? "✓" : "✕") + '</span><span class="review-title"><strong>' + (index + 1) + '. ' + esc(q.question) + '</strong><small>' + esc(q.category) + ' · ' + (isChoice ? "选择题" : "填空题") + '</small></span></summary><div class="review-body"><div class="review-stem">' + esc(q.question) + '</div>' + opts + '<div class="review-answers">你的答案：' + esc(user) + '<br>正确答案：<b>' + esc(right) + '</b></div>' + (q.explanation ? '<div class="review-explain">' + esc(q.explanation) + '</div>' : "") + '</div></details>';
+    }).join("");
+    state.done = true;
+    app.innerHTML =
+      '<header class="top"><div class="brand"><span class="seal">文</span><span><strong>' + esc(state.category) + '</strong><small>' + (state.type === "choice" ? "选择题" : "填空题") + ' · 第 ' + (state.group + 1) + ' 组</small></span></div><span class="pill">本组完成</span></header>' +
+      '<div class="result"><div class="result-top"><p class="eyebrow">RESULT · 第 ' + (state.group + 1) + ' 组</p><div class="big">' + score + '</div><p style="margin-bottom:0">共 ' + total + ' 题，正确率 ' + percent + '%</p><h2 style="margin-top:18px">' + (percent >= 80 ? "这一组很稳。" : percent >= 60 ? "再回看一遍错题。" : "错题先弄懂，再开下一组。") + '</h2><p>进度已保存，退出再打开还能看到这一组的正确率。</p></div><div class="review"><h3>逐题回看</h3>' + review + '</div><div class="result-actions"><button class="action" type="button" data-action="restart">重新开始这一组</button><button class="action secondary" type="button" data-action="groups">回到分组</button></div></div>';
+  }
+
+  function restartGroup() {
+    var k = key(state.category, state.type, state.group);
+    store.groups[k] = { answers: {}, index: 0, score: 0, completed: false, draftSelected: null, draftFill: "" };
+    saveStore();
+    startGroup(state.group);
+  }
+
+  app.addEventListener("click", function (event) {
+    var category = event.target.closest("[data-category]");
+    if (category) { state.category = category.getAttribute("data-category"); state.screen = "types"; renderTypes(); return; }
+    var type = event.target.closest("[data-type]");
+    if (type) { state.type = type.getAttribute("data-type"); state.screen = "groups"; renderGroups(); return; }
+    var group = event.target.closest("[data-group]");
+    if (group) { startGroup(Number(group.getAttribute("data-group"))); return; }
+    var option = event.target.closest("[data-option]");
+    if (option && !state.record) { state.selected = Number(option.getAttribute("data-option")); saveDraft(); renderQuiz(); return; }
+    var action = event.target.closest("[data-action]");
+    if (action) {
+      var name = action.getAttribute("data-action");
+      if (name === "home") { state.screen = "home"; renderHome(); }
+      if (name === "types") { state.screen = "types"; renderTypes(); }
+      if (name === "groups") { state.screen = "groups"; renderGroups(); }
+      if (name === "restart") restartGroup();
+      return;
+    }
+    if (event.target.id === "action") {
+      if (state.record) next(); else confirm();
+    }
+  });
+
+  app.addEventListener("keydown", function (event) {
+    if (event.key !== "Enter" || event.isComposing) return;
+    if (event.target.id === "fill-input" && !state.record) { event.preventDefault(); confirm(); }
+  });
+
+  renderHome();
+})();
+</script>
 </body>
 </html>
