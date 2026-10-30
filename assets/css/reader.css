@@ -267,67 +267,81 @@
   padding: 3px;
 }
 
-/* ============ 手机适配 ============ */
-@media (max-width: 560px) {
+/* ============ 大屏适配（电脑 / 小米平板 7） ============ */
+/* 平板竖屏：字大一点、留白多一点 */
+@media (min-width: 700px) {
   :root {
-    --sent: 17px;
-    --lh: 1.95;
-    --ui: 13px;
+    --sent: 20px;
+    --lh: 2.05;
   }
   .topbar-inner {
-    padding: 7px 12px 0;
-  }
-  .title-row {
-    gap: 4px 8px;
-    padding-bottom: 6px;
-  }
-  .title-row h1 {
-    font-size: 19px;
-  }
-  .title-row .author {
-    font-size: 12px;
+    padding: 12px 20px 0;
   }
   .wrap {
-    padding: 12px 10px 28px;
+    padding: 22px 20px 48px;
   }
   .para {
-    padding: 14px 12px 6px;
-    margin-bottom: 14px;
-    border-radius: 10px;
+    padding: 22px 24px 10px;
+    margin-bottom: 24px;
+    border-radius: 14px;
+  }
+}
+
+/* 电脑 / 平板横屏：正文加宽到 1000px，字号 21px（约 47 字一行） */
+@media (min-width: 1024px) {
+  :root {
+    --sent: 21px;
+    --lh: 2.1;
+    --ui: 15px;
+  }
+  .topbar-inner {
+    max-width: 1000px;
+    padding: 14px 24px 0;
+  }
+  .title-row {
+    padding-bottom: 10px;
+  }
+  .title-row h1 {
+    font-size: 24px;
+  }
+  .title-row .author {
+    font-size: 14px;
+  }
+  .back {
+    min-height: 28px;
+    padding: 0 11px 0 9px;
+    font-size: 13px;
+  }
+  .wrap {
+    max-width: 1000px;
+    padding: 26px 24px 56px;
+  }
+  .para {
+    padding: 26px 30px 12px;
+    margin-bottom: 28px;
   }
   .para-head {
-    gap: 8px;
-    margin-bottom: 8px;
-    padding-bottom: 6px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
   }
   .para-no {
-    font-size: 15px;
-  }
-  .para-gist {
-    font-size: 12px;
-  }
-  .sent {
-    gap: 5px;
-    padding: 3px 0;
+    font-size: 17px;
   }
   .s-no {
-    min-width: 17px;
-    font-size: 11px;
+    min-width: 24px;
   }
   .trans {
-    padding: 8px 10px;
-    font-size: calc(var(--sent) - 2px);
-    line-height: 1.75;
+    padding: 14px 18px;
+    margin: 8px 0 6px;
   }
   .pop {
-    width: calc(100vw - 24px);
-    max-width: none;
-    padding: 12px 12px 13px;
+    width: 320px;
+    padding: 15px 16px;
   }
   .pop .p-word {
-    font-size: 19px;
+    font-size: 23px;
   }
   .pop .p-mean {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
