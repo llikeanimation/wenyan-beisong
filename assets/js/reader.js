@@ -27,6 +27,33 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/* 按篇目记住译文展开状态；禁用本地存储时自动退回原来的临时状态 */
+function transStorageKey() {
+  return 'wenyan-trans-' + ((TEXT && TEXT.slug) || 'unknown');
+}
+
+function restoreTrans() {
+  try {
+    if (!window.localStorage) return;
+    var saved = JSON.parse(window.localStorage.getItem(transStorageKey()) || '{}');
+    Object.keys(saved).forEach(function (key) {
+      if (saved[key]) transOpen[key] = true;
+    });
+  } catch (e) {
+    /* 隐私模式或 file:// 限制不影响背诵功能 */
+  }
+}
+
+function saveTrans() {
+  try {
+    if (window.localStorage) {
+      window.localStorage.setItem(transStorageKey(), JSON.stringify(transOpen));
+    }
+  } catch (e) {
+    /* 存储不可用时仅保留本次打开期间的展开状态 */
+  }
+}
+
 /* ================= 渲染 ================= */
 function renderArticle() {
   var html = '';
@@ -68,7 +95,7 @@ function renderSent(p, s, sent, num, key) {
   var transShow = transOpen[key] ? ' show' : '';
   var noHtml = num === null ? '' : '<div class="s-no">' + num + '</div>';
   return (
-    '<div class="sent">' +
+    '<div class="sent' + (transOpen[key] ? ' is-open' : '') + '">' +
     noHtml +
     '<div class="s-main">' +
     '<div class="s-body' + hotCls + ' clickable" data-sent="' + key + '">' + body + '</div>' +
@@ -146,9 +173,13 @@ function boot() {
       transOpen[key] = !transOpen[key];
       var tr = body.nextElementSibling;
       if (tr) tr.classList.toggle('show', !!transOpen[key]);
+      var sentBox = body.closest('.sent');
+      if (sentBox) sentBox.classList.toggle('is-open', !!transOpen[key]);
+      saveTrans();
     }
   });
 
+  restoreTrans();
   renderArticle();
 }
 

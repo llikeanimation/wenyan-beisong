@@ -1,144 +1,272 @@
 /* ============================================================
    文言文背诵 · 阅读页
-   顶栏（含返回目录）+ 段落卡片 + 加点字标记 + 释义弹窗
+   原文为视觉核心；译文与释义退居其次，交互保持安静清晰
    ============================================================ */
+
+body {
+  background:
+    radial-gradient(ellipse at 96% 4%, rgba(63, 98, 88, 0.075), transparent 36%),
+    radial-gradient(ellipse at -8% 44%, rgba(164, 135, 82, 0.075), transparent 38%),
+    linear-gradient(150deg, #f6f1e7 0%, var(--bg) 48%, #efe7d9 100%);
+  background-attachment: fixed;
+}
 
 /* ---------------- 顶栏 ---------------- */
 .topbar {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 91%, transparent);
+  border-bottom: 1px solid var(--line-strong);
+  box-shadow: 0 10px 28px -26px var(--shadow-deep);
+  backdrop-filter: blur(16px) saturate(0.9);
+  -webkit-backdrop-filter: blur(16px) saturate(0.9);
+}
+
+.topbar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 45%, transparent), transparent);
+  pointer-events: none;
 }
 
 .topbar-inner {
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 10px 16px 0;
+  padding: 12px 18px 11px;
 }
 
 .title-row {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 10px 13px;
   flex-wrap: wrap;
-  padding-bottom: 8px;
 }
 
 .title-row h1 {
-  font-family: var(--serif);
-  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 23px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.11em;
+  line-height: 1.4;
+}
+
+.title-row h1::before {
+  content: "";
+  flex: 0 0 3px;
+  width: 3px;
+  height: 1.05em;
+  background: linear-gradient(180deg, var(--gold), color-mix(in srgb, var(--gold) 24%, transparent));
+  border-radius: 2px;
 }
 
 .title-row .author {
   color: var(--soft);
-  font-size: 13px;
+  font-family: var(--serif);
+  font-size: 12.5px;
+  letter-spacing: 0.025em;
+  line-height: 1.6;
 }
 
 /* 返回目录 */
 .back {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  min-height: 26px;
-  padding: 0 9px 0 7px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--paper);
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 0 12px 0 10px;
   color: var(--soft);
+  background: color-mix(in srgb, var(--paper-deep) 72%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
   font-size: 12px;
   line-height: 1;
   white-space: nowrap;
+  transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
 }
 
 .back::before {
   content: "←";
-  font-size: 13px;
+  color: var(--gold);
+  font-size: 15px;
 }
 
 .back:active {
   transform: translateY(1px);
 }
 
-/* ---------------- 正文 ---------------- */
+@media (hover: hover) {
+  .back:hover {
+    color: var(--accent);
+    background: var(--paper);
+    border-color: var(--gold);
+  }
+}
+
+/* ---------------- 正文卷面 ---------------- */
 .wrap {
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 18px 16px 40px;
+  padding: 28px 18px 64px;
+  animation: page-enter 0.5s cubic-bezier(0.22, 0.7, 0.25, 1) both;
 }
 
 .para {
-  background: var(--paper);
+  position: relative;
+  margin-bottom: 24px;
+  padding: 22px 22px 14px;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.38), transparent 46%),
+    var(--paper);
   border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 18px 18px 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 4px var(--shadow);
+  border-radius: 6px;
+  box-shadow:
+    0 18px 42px -34px var(--shadow-deep),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.32);
+}
+
+.para::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: 28px;
+  left: 28px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 64%, transparent), transparent);
+  pointer-events: none;
+}
+
+.para::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 18px;
+  height: 18px;
+  border-top: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+  pointer-events: none;
+  opacity: 0.3;
 }
 
 .para-head {
+  position: relative;
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 11px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed var(--line);
+  margin-bottom: 13px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.para-head::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 72px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.68;
 }
 
 .para-no {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 3px 9px;
   color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 58%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+  border-radius: 2px;
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
 }
 
 .para-gist {
   color: var(--soft);
-  font-size: 13px;
   font-family: var(--kai);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 .sent {
-  display: flex;
-  gap: 8px;
-  padding: 5px 0;
-  border-radius: 8px;
+  position: relative;
+  margin: 0 -8px;
+  padding: 5px 8px 11px;
+  border-radius: 4px;
+  transition: background-color 0.22s ease;
+}
+
+.sent.is-open {
+  background: color-mix(in srgb, var(--gold-soft) 30%, transparent);
+}
+
+.sent.is-open::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  bottom: 15px;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), color-mix(in srgb, var(--gold) 18%, transparent));
+  border-radius: 2px;
 }
 
 .s-no {
-  flex: 0 0 auto;
-  min-width: 22px;
+  float: left;
+  min-width: 24px;
+  margin-right: 8px;
+  padding-top: calc((var(--lh) * var(--sent) - var(--sent)) / 2);
   color: var(--blank-ink);
   font-size: calc(var(--ui) - 1px);
-  padding-top: calc((var(--lh) * var(--sent) - var(--sent)) / 2 - 2px);
-  text-align: right;
   font-variant-numeric: tabular-nums;
+  line-height: 1.6;
+  text-align: right;
   user-select: none;
 }
 
 .s-main {
-  flex: 1 1 auto;
   min-width: 0;
+  overflow: hidden;
 }
 
 .s-body {
+  padding: 4px 6px;
+  color: var(--ink);
+  border-radius: 3px;
   font-family: var(--serif);
   font-size: var(--sent);
+  font-weight: 400;
+  letter-spacing: 0.045em;
   line-height: var(--lh);
-  letter-spacing: 0.5px;
   text-align: justify;
-  border-radius: 6px;
+  text-justify: inter-ideograph;
+  transition: background-color 0.18s ease;
 }
 
 .clickable .s-body {
   cursor: pointer;
+}
+
+@media (hover: hover) {
+  .clickable .s-body:hover {
+    background: color-mix(in srgb, var(--gold-soft) 30%, transparent);
+  }
 }
 
 .s-body.hot {
@@ -146,36 +274,50 @@
   font-weight: 400;
 }
 
+/* ---------------- 译文 ---------------- */
 .trans {
   display: none;
-  margin: 6px 0 4px;
-  padding: 9px 12px;
-  background: var(--word-bg);
-  border-left: 3px solid var(--word);
-  border-radius: 0 7px 7px 0;
+  margin: 9px 4px 5px;
+  padding: 13px 15px;
+  color: var(--soft);
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.28), transparent 60%),
+    var(--paper-deep);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 8px rgba(92, 71, 38, 0.025);
   font-family: var(--kai);
   font-size: calc(var(--sent) - 3px);
-  line-height: 1.85;
-  color: var(--soft);
+  letter-spacing: 0.025em;
+  line-height: 1.95;
 }
 
 .trans.show {
   display: block;
-  animation: fade 0.2s ease;
+  animation: trans-open 0.24s ease both;
 }
 
 .trans b {
-  color: var(--word);
-  font-weight: 600;
+  display: inline-block;
+  margin-right: 9px;
+  padding: 0 6px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, var(--line));
+  border-radius: 2px;
   font-family: var(--sans);
-  font-size: calc(var(--ui) - 1px);
-  margin-right: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.8;
+  vertical-align: 1px;
 }
 
-@keyframes fade {
+@keyframes trans-open {
   from {
     opacity: 0;
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -183,37 +325,49 @@
   }
 }
 
-/* ---------------- 字词标记 ---------------- */
+/* ---------------- 加点字词 ---------------- */
 .word {
-  color: var(--word);
-  font-weight: 400;
-  border-bottom: 1px solid var(--word);
-  padding: 0 1px;
-  cursor: pointer;
+  --word-current: var(--word);
   position: relative;
+  padding: 0 1px 1px;
+  color: var(--word-current);
+  background: linear-gradient(to top, color-mix(in srgb, var(--word-current) 10%, transparent) 0 25%, transparent 25%);
+  border-bottom: 1px solid color-mix(in srgb, var(--word-current) 68%, transparent);
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
 }
 
-/* 连续挨在一起的加点词，组内依次用不同颜色，便于看出是两个、三个还是四个词 */
 .word.c1 {
-  color: var(--word2);
-  border-bottom-color: var(--word2);
-}
-.word.c2 {
-  color: var(--word3);
-  border-bottom-color: var(--word3);
-}
-.word.c3 {
-  color: var(--word4);
-  border-bottom-color: var(--word4);
+  --word-current: var(--word2);
 }
 
-/* ---------------- 释义弹窗 ---------------- */
+.word.c2 {
+  --word-current: var(--word3);
+}
+
+.word.c3 {
+  --word-current: var(--word4);
+}
+
+@media (hover: hover) {
+  .word:hover {
+    background: color-mix(in srgb, var(--word-current) 12%, transparent);
+    border-bottom-color: var(--word-current);
+  }
+}
+
+/* ---------------- 字词释义弹窗 ---------------- */
 #mask {
   position: fixed;
   inset: 0;
   z-index: 80;
   display: none;
+  background: rgba(53, 45, 32, 0.1);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
 }
+
 #mask.show {
   display: block;
 }
@@ -221,25 +375,41 @@
 .pop {
   position: fixed;
   z-index: 90;
-  width: 280px;
-  max-width: calc(100vw - 32px);
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 11px;
-  box-shadow: 0 8px 30px var(--shadow);
-  padding: 13px 14px;
   display: none;
+  width: 300px;
+  max-width: calc(100vw - 28px);
+  max-height: calc(100vh - 28px);
+  padding: 18px 19px 17px;
+  overflow-y: auto;
+  color: var(--ink);
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.42), transparent 50%),
+    var(--paper);
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--gold);
+  border-radius: 6px;
+  box-shadow: 0 22px 58px -20px rgba(53, 42, 24, 0.34);
 }
 
 .pop.show {
   display: block;
-  animation: pop 0.18s ease;
+  animation: pop-open 0.18s ease both;
 }
 
-@keyframes pop {
+.pop::before {
+  content: "字词释义";
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  line-height: 1.5;
+}
+
+@keyframes pop-open {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: translateY(4px) scale(0.98);
   }
   to {
     opacity: 1;
@@ -248,100 +418,252 @@
 }
 
 .pop .p-word {
+  display: inline-block;
+  margin: 0 34px 8px 0;
+  padding-bottom: 3px;
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--gold) 52%, transparent);
   font-family: var(--serif);
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 700;
-  margin-right: 8px;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
 }
+
 .pop .p-mean {
-  font-size: 14px;
-  line-height: 1.7;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 14.5px;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
 }
+
 .pop .p-close {
   position: absolute;
   top: 7px;
-  right: 9px;
+  right: 7px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   color: var(--soft);
-  font-size: 17px;
+  border-radius: 50%;
+  font-size: 20px;
   line-height: 1;
-  padding: 3px;
+  transition: color 0.18s ease, background-color 0.18s ease;
 }
 
-/* ============ 大屏适配（电脑 / 小米平板 7） ============ */
-/* 平板竖屏：字大一点、留白多一点 */
+@media (hover: hover) {
+  .pop .p-close:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+/* ============ 小米 Pad 7 竖屏 ============ */
 @media (min-width: 700px) {
   :root {
-    --sent: 20px;
-    --lh: 2.05;
+    --sent: 21px;
+    --lh: 2.08;
   }
+
   .topbar-inner {
-    padding: 12px 20px 0;
+    padding: 14px 24px 13px;
   }
+
+  .title-row h1 {
+    font-size: 25px;
+  }
+
+  .title-row .author {
+    font-size: 13.5px;
+  }
+
+  .back {
+    min-height: 38px;
+    padding-right: 14px;
+    padding-left: 12px;
+    font-size: 13px;
+  }
+
   .wrap {
-    padding: 22px 20px 48px;
+    padding: 32px 24px 72px;
   }
+
   .para {
-    padding: 22px 24px 10px;
-    margin-bottom: 24px;
-    border-radius: 14px;
+    margin-bottom: 28px;
+    padding: 27px 29px 17px;
+  }
+
+  .para-head {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+  }
+
+  .para-no {
+    font-size: 15px;
+  }
+
+  .para-gist {
+    font-size: 14px;
+  }
+
+  .trans {
+    margin-top: 11px;
+    padding: 15px 18px;
+  }
+
+  .pop {
+    width: 330px;
+    padding: 20px 21px;
+  }
+
+  .pop .p-word {
+    font-size: 25px;
+  }
+
+  .pop .p-mean {
+    font-size: 15.5px;
   }
 }
 
-/* 电脑 / 平板横屏：正文加宽到 1000px，字号 21px（约 47 字一行） */
+/* ============ 电脑 / 小米 Pad 7 横屏 ============ */
 @media (min-width: 1024px) {
   :root {
-    --sent: 21px;
+    --sent: 22px;
     --lh: 2.1;
     --ui: 15px;
   }
+
+  .topbar-inner,
+  .wrap {
+    max-width: 1020px;
+  }
+
   .topbar-inner {
-    max-width: 1000px;
-    padding: 14px 24px 0;
+    padding: 15px 28px 14px;
   }
+
   .title-row {
-    padding-bottom: 10px;
+    gap: 12px 16px;
   }
+
   .title-row h1 {
-    font-size: 24px;
+    font-size: 27px;
   }
+
   .title-row .author {
     font-size: 14px;
   }
-  .back {
-    min-height: 28px;
-    padding: 0 11px 0 9px;
-    font-size: 13px;
-  }
+
   .wrap {
-    max-width: 1000px;
-    padding: 26px 24px 56px;
+    padding: 38px 28px 82px;
   }
+
   .para {
-    padding: 26px 30px 12px;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
+    padding: 31px 35px 19px;
   }
+
+  .para::after {
+    top: 13px;
+    right: 13px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .para-no {
+    padding-right: 11px;
+    padding-left: 11px;
+    font-size: 16px;
+  }
+
+  .sent {
+    padding-top: 7px;
+    padding-bottom: 13px;
+  }
+
+  .trans {
+    margin: 12px 5px 7px;
+    padding: 16px 20px;
+  }
+
+  .pop {
+    width: 350px;
+  }
+}
+
+/* 小屏不压缩正文到难以阅读，保留完整功能与触控面积 */
+@media (max-width: 480px) {
+  :root {
+    --sent: 19px;
+    --lh: 2.06;
+  }
+
+  .topbar-inner {
+    padding: 10px 13px;
+  }
+
+  .title-row {
+    gap: 7px 10px;
+  }
+
+  .title-row h1 {
+    gap: 7px;
+    font-size: 21px;
+    letter-spacing: 0.07em;
+  }
+
+  .title-row .author {
+    flex-basis: 100%;
+    padding-left: 2px;
+    font-size: 12px;
+  }
+
+  .back {
+    min-height: 34px;
+    padding: 0 10px 0 8px;
+  }
+
+  .wrap {
+    padding: 20px 12px 50px;
+  }
+
+  .para {
+    margin-bottom: 19px;
+    padding: 18px 14px 11px;
+  }
+
   .para-head {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     padding-bottom: 10px;
   }
+
   .para-no {
-    font-size: 17px;
+    font-size: 13px;
   }
-  .s-no {
-    min-width: 24px;
+
+  .sent {
+    margin-right: -4px;
+    margin-left: -4px;
+    padding: 3px 4px 9px;
   }
+
+  .s-body {
+    padding-right: 4px;
+    padding-left: 4px;
+    letter-spacing: 0.02em;
+  }
+
   .trans {
-    padding: 14px 18px;
-    margin: 8px 0 6px;
+    margin-right: 1px;
+    margin-left: 1px;
+    padding: 12px;
+    font-size: 16px;
   }
+
   .pop {
-    width: 320px;
-    padding: 15px 16px;
-  }
-  .pop .p-word {
-    font-size: 23px;
-  }
-  .pop .p-mean {
-    font-size: 15px;
+    padding: 17px;
   }
 }
