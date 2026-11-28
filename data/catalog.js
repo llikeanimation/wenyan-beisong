@@ -4,7 +4,7 @@ window.CATALOG = [
   { no: 1, slug: 'zhengbo', title: '郑伯克段于鄢', author: '〔先秦〕《左传·隐公元年》', paras: 7, words: 84, marks: 84, chars: 832, ready: true },
   { no: 2, slug: 'qihuangong', title: '齐桓公伐楚', author: '〔先秦〕《左传·僖公四年》', paras: 5, words: 27, marks: 28, chars: 448, ready: true },
   { no: 3, slug: 'zhuzhiwu', title: '烛之武退秦师', author: '〔先秦〕《左传·僖公三十年》', paras: 3, words: 38, marks: 38, chars: 435, ready: true },
-  { no: 4, slug: 'lvxiang', title: '吕相绝秦', author: '〔先秦〕《左传·成公十三年》', paras: 7, words: 83, marks: 86, chars: 1008, ready: true },
+  { no: 4, slug: 'lvxiang', title: '吕相绝秦', author: '〔先秦〕《左传·成公十三年》', paras: 7, words: 84, marks: 87, chars: 1008, ready: true },
   { no: 5, slug: 'goujian', title: '勾践灭吴', author: '〔先秦〕《国语·越语上》', paras: 9, words: 94, marks: 96, chars: 1658, ready: true },
   { no: 6, slug: 'zouji', title: '邹忌讽齐王纳谏', author: '〔先秦〕《战国策·齐策一》', paras: 3, words: 27, marks: 27, chars: 449, ready: true },
   { no: 7, slug: 'chulong', title: '触龙说赵太后', author: '〔先秦〕《战国策·赵策四》', paras: 6, words: 70, marks: 72, chars: 814, ready: true },
